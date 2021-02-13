@@ -20,14 +20,14 @@ class EtagConditionalsServiceProvider extends ServiceProvider
         $middlewares = [
             SetEtag::class,
             IfNoneMatch::class,
-            IfMatch::class
+            IfMatch::class,
         ];
 
         // Set middleware group
         $this->app['router']->middlewareGroup('etag', $middlewares);
 
         // Set individual middlewares
-        foreach($middlewares as $middleware){
+        foreach ($middlewares as $middleware) {
             $this->app['router']->aliasMiddleware((new $middleware)->name(), $middleware);
         }
 

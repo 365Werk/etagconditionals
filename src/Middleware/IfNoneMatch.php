@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 class IfNoneMatch extends Middleware
 {
-
-    public string $middleware = "ifNoneMatch";
+    public string $middleware = 'ifNoneMatch';
 
     /**
      * Handle an incoming request.
@@ -23,17 +22,17 @@ class IfNoneMatch extends Middleware
         $method = $request->getMethod();
 
         // Support using HEAD method for checking If-None-Match
-        if($request->isMethod('HEAD')) {
+        if ($request->isMethod('HEAD')) {
             $request->setMethod('GET');
         }
 
         //Handle response
         $response = $next($request);
 
-        $etag = '"' . md5($response->getContent()) . '"';
+        $etag = '"'.md5($response->getContent()).'"';
         $noneMatch = $request->getETags();
 
-        if(in_array($etag, $noneMatch)){
+        if (in_array($etag, $noneMatch)) {
             $response->setNotModified();
         }
 
@@ -41,5 +40,4 @@ class IfNoneMatch extends Middleware
 
         return $response;
     }
-
 }
