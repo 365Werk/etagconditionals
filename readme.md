@@ -52,6 +52,6 @@ license. Please see the [license file](license.md) for more information.
 [link-packagist]: https://packagist.org/packages/werk365/etagconditionals
 [link-downloads]: https://packagist.org/packages/werk365/etagconditionals
 [link-travis]: https://travis-ci.org/werk365/etagconditionals
-[link-styleci]: https://styleci.io/repos/12345678
-[link-author]: https://github.com/werk365
+[link-styleci]: https://styleci.io/repos/338617549
+[link-author]: https://github.com/HergenD
 [link-contributors]: ../../contributors
