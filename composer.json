@@ -1,0 +1,41 @@
+{
+    "name": "werk365/etagconditionals",
+    "description": ":package_description",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hergen Dillema",
+            "email": "h.dillema@365werk.nl",
+            "homepage": "365werk.nl"
+        }
+    ],
+    "homepage": "https://github.com/werk365/etagconditionals",
+    "keywords": ["Laravel", "EtagConditionals"],
+    "require": {
+        "illuminate/support": "~7|~8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "~5|~6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Werk365\\EtagConditionals\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Werk365\\EtagConditionals\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Werk365\\EtagConditionals\\EtagConditionalsServiceProvider"
+            ],
+            "aliases": {
+                "EtagConditionals": "Werk365\\EtagConditionals\\Facades\\EtagConditionals"
+            }
+        }
+    }
+}
