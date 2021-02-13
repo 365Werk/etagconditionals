@@ -4,12 +4,10 @@ namespace Werk365\EtagConditionals\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Werk365\LaravelJsonApi\Middleware\IfNoneMatch;
 
 class SetEtag extends Middleware
 {
-
-    public string $middleware = "setEtag";
+    public string $middleware = 'setEtag';
 
     /**
      * Handle an incoming request.
