@@ -47,7 +47,7 @@ license. Please see the [license file](license.md) for more information.
 [ico-version]: https://img.shields.io/packagist/v/werk365/etagconditionals.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/werk365/etagconditionals.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/werk365/etagconditionals/master.svg?style=flat-square
-[ico-styleci]: https://styleci.io/repos/12345678/shield
+[ico-styleci]: https://styleci.io/repos/338617549/shield
 
 [link-packagist]: https://packagist.org/packages/werk365/etagconditionals
 [link-downloads]: https://packagist.org/packages/werk365/etagconditionals
