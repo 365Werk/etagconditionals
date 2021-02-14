@@ -6,9 +6,9 @@ use Tests\TestCase;
 
 class SetEtagTest extends TestCase
 {
-    private string $response = "OK";
+    private string $response = 'OK';
 
-    protected function setUp():void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -27,7 +27,7 @@ class SetEtagTest extends TestCase
     /** @test */
     public function etag_header_has_correct_value()
     {
-        $value = '"' . md5($this->response) . '"';
+        $value = '"'.md5($this->response).'"';
         $response = $this->get('/_test/set-etag');
         $response->assertHeader('ETag', $value);
     }
