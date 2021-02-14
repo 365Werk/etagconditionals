@@ -4,9 +4,7 @@
   
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
-
 [![Total Downloads][ico-downloads]][link-downloads]
-
 [![StyleCI][ico-styleci]][link-styleci]
 
   
@@ -47,13 +45,16 @@ Currently available middleware:
 * `ifNoneMatch`
 
 __setEtag__ `Method: Any`
+
 This middleware will set the `ETag` header on your responses. The `ETag` header is equal to a md5 hash of `$response->getContent()`.
 
 __ifMatch__ `Method: PATCH`
+
 This middleware will resolve the action requested by the patch request, and will attempt to call the `GET` request equivalent. For controllers, this means we assume a method `show` is present on the controller. For closures, the closure will currently be called as is. For this reason, support for closures is not complete and is only recommended to be used for testing (see `tests/IfMatchTest.php`).
 The content retrieved will then be hashed in the same way the original ETag was created, and compared to the `If-Match` header sent. If the `If-Match` header and new etag match, the `PATCH` request will be allowed through the middleware. If there is no match, `412` will be returned.
 
 __ifNoneMatch__ `Method: GET|HEAD`
+
 This middleware will simply compare the submitted `If-None-Match` header to a newly created etag of the response. If there is no match, `200` is returned, with the new response in the case of a `GET` request. If the hashes are matching, `304` is returned with no content, allowing the browser to used cached content instead.
 
 ## Change log
