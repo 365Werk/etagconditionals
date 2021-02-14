@@ -20,7 +20,7 @@ class SetEtag extends Middleware
     {
         //Handle response
         $response = $next($request);
-
+        
         // Setting etag
         $etag = md5($response->getContent());
         $response->setEtag($etag);
