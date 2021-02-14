@@ -6,9 +6,9 @@ use Tests\TestCase;
 
 class IfNoneMatchTest extends TestCase
 {
-    private string $response = "OK";
+    private string $response = 'OK';
 
-    protected function setUp():void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -22,19 +22,19 @@ class IfNoneMatchTest extends TestCase
     {
         $noneMatch = '"'.md5($this->response.'NoneMatch').'"';
         $response = $this->withHeaders([
-            'If-None-Match' => $noneMatch,    
+            'If-None-Match' => $noneMatch,
         ])
         ->get('/_test/if-none-match');
 
         $response->assertStatus(200);
     }
-    
+
     /** @test */
     public function get_request_status_304_with_matching_IfNoneMatch()
     {
         $noneMatch = '"'.md5($this->response).'"';
         $response = $this->withHeaders([
-            'If-None-Match' => $noneMatch,    
+            'If-None-Match' => $noneMatch,
         ])
         ->get('/_test/if-none-match');
 
