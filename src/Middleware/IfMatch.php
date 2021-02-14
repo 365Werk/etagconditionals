@@ -22,12 +22,11 @@ class IfMatch extends Middleware
             $controller = $request->route()->action['uses'];
 
             // Check if controller or closure should be called
-            if(is_string($controller)){ // Controller
+            if (is_string($controller)) { // Controller
                 $controller = explode('@', $controller)[0];
                 $method = 'show';
                 Log::info($controller);
                 $get = app()->call("$controller@$method", $request->route()->parameters());
-
             } else { // Closure
                 $get = app()->call($controller);
             }

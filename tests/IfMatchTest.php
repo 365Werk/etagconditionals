@@ -6,9 +6,9 @@ use Tests\TestCase;
 
 class IfMatchTest extends TestCase
 {
-    private string $response = "OK";
+    private string $response = 'OK';
 
-    protected function setUp():void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -22,22 +22,22 @@ class IfMatchTest extends TestCase
     {
         $ifMatch = '"'.md5($this->response).'"';
         $response = $this->withHeaders([
-            'If-Match' => $ifMatch,    
+            'If-Match' => $ifMatch,
         ])
         ->patch('/_test/if-match');
 
         $response->assertStatus(200);
     }
 
-        /** @test */
-        public function patch_request_returns_412_if_none_matching_IfMatch()
-        {
-            $ifMatch = '"'.md5($this->response.'ifMatch').'"';
-            $response = $this->withHeaders([
-                'If-Match' => $ifMatch,    
-            ])
+    /** @test */
+    public function patch_request_returns_412_if_none_matching_IfMatch()
+    {
+        $ifMatch = '"'.md5($this->response.'ifMatch').'"';
+        $response = $this->withHeaders([
+            'If-Match' => $ifMatch,
+        ])
             ->patch('/_test/if-match');
-    
-            $response->assertStatus(412);
-        }
+
+        $response->assertStatus(412);
+    }
 }
