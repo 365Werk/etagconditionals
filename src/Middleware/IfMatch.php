@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 class IfMatch extends Middleware
 {
     public string $middleware = 'ifMatch';
+
     /**
      * Handle an incoming request.
      *
@@ -37,13 +38,13 @@ class IfMatch extends Middleware
             }
 
             // Handle regular responses
-            if(is_a($get, Response::class)){
+            if (is_a($get, Response::class)) {
                 $get = $get->getContent();
             }
 
             $currentEtag = '"'.md5($get).'"';
             $ifMatch = $request->header('If-Match');
-            
+
             if ($currentEtag !== $ifMatch) {
                 return response(null, 412);
             }
