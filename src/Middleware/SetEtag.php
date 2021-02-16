@@ -18,7 +18,7 @@ class SetEtag extends Middleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->isMethod('HEAD') && !$request->isMethod('GET') ){
+        if (! $request->isMethod('HEAD') && ! $request->isMethod('GET')) {
             return  $next($request);
         }
 
@@ -32,7 +32,7 @@ class SetEtag extends Middleware
 
         //Handle response
         $response = $next($request);
-        
+
         // Setting etag
         $etag = md5($response->getContent());
         $response->setEtag($etag);
