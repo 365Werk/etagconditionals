@@ -20,34 +20,41 @@ class IfMatch extends Middleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->isMethod('PATCH') && $request->hasHeader('If-Match')) {
-            $controller = $request->route()->action['uses'];
+        // Next unless method is PATCH and If-Match header is set
+        if (!$request->isMethod('PATCH') || (!$request->isMethod('PATCH') && !$request->hasHeader('If-Match'))) {
+            return $next($request);
+        }
 
-            // Check if controller or closure should be called
-            if (is_string($controller)) { // Controller
-                $controller = explode('@', $controller)[0];
-                $method = 'show';
-                $get = app()->call("$controller@$method", $request->route()->parameters());
-            } else { // Closure
-                $get = app()->call($controller);
-            }
+        // Get action from request
+        $action = $request->route()->action['uses'];
 
-            // Handle JsonResource responses
-            if (is_a($get, JsonResource::class)) {
-                $get = json_encode((object) [$get::$wrap => $get]);
-            }
+        // Check if action is controller or closure
+        if (is_string($action)) { // Controller
+            $controller = explode('@', $action)[0];
+            $method = 'show';
+            $response = app()->call("$controller@$method", $request->route()->parameters());
+        } else { // Closure
+            $response = app()->call($action);
+        }
 
-            // Handle regular responses
-            if (is_a($get, Response::class)) {
-                $get = $get->getContent();
-            }
+        // Check if response is object
+        if (!is_object($response)) {
+            $response = response($response);
+        }
 
-            $currentEtag = '"'.md5($get).'"';
-            $ifMatch = $request->header('If-Match');
+        // Handle JsonResource responses
+        if (is_a($response, JsonResource::class)) {
+            $response = $response->response();
+        }
 
-            if ($currentEtag !== $ifMatch) {
-                return response(null, 412);
-            }
+        // Get content from response object and get hashes from content and etag
+        $content = $response->getContent();
+        $currentEtag = '"' . md5($content) . '"';
+        $ifMatch = $request->header('If-Match');
+
+        // Compare current and request hashes
+        if ($currentEtag !== $ifMatch) {
+            return response(null, 412);
         }
 
         return $next($request);
