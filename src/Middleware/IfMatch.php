@@ -21,7 +21,7 @@ class IfMatch extends Middleware
     public function handle(Request $request, Closure $next)
     {
         // Next unless method is PATCH and If-Match header is set
-        if (!$request->isMethod('PATCH') || (!$request->isMethod('PATCH') && !$request->hasHeader('If-Match'))) {
+        if (! $request->isMethod('PATCH') || (! $request->isMethod('PATCH') && ! $request->hasHeader('If-Match'))) {
             return $next($request);
         }
 
@@ -38,7 +38,7 @@ class IfMatch extends Middleware
         }
 
         // Check if response is object
-        if (!is_object($response)) {
+        if (! is_object($response)) {
             $response = response($response);
         }
 
@@ -49,7 +49,7 @@ class IfMatch extends Middleware
 
         // Get content from response object and get hashes from content and etag
         $content = $response->getContent();
-        $currentEtag = '"' . md5($content) . '"';
+        $currentEtag = '"'.md5($content).'"';
         $ifMatch = $request->header('If-Match');
 
         // Compare current and request hashes
