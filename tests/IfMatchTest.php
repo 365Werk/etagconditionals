@@ -1,18 +1,19 @@
 <?php
 
-namespace Tests\Feature;
+namespace Werk365\EtagConditionals\Tests;
 
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
+use Werk365\EtagConditionals\Middleware\IfMatch;
 
 class IfMatchTest extends TestCase
 {
     private string $response = 'OK';
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
-        \Route::middleware('ifMatch')->any('/_test/if-match', function () {
+        \Route::middleware(IfMatch::class)->any('/_test/if-match', function () {
             return response($this->response, 200);
         });
     }

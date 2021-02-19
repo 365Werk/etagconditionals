@@ -18,10 +18,6 @@ class SetEtag extends Middleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! $request->isMethod('HEAD') && ! $request->isMethod('GET')) {
-            return  $next($request);
-        }
-
         // Handle request
         $method = $request->getMethod();
 

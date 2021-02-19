@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Route;
 
 class IfMatch extends Middleware
 {
@@ -21,39 +22,24 @@ class IfMatch extends Middleware
     public function handle(Request $request, Closure $next)
     {
         // Next unless method is PATCH and If-Match header is set
-        if (! $request->isMethod('PATCH') || ($request->isMethod('PATCH') && ! $request->hasHeader('If-Match'))) {
+        if (! ($request->isMethod('PATCH') && $request->hasHeader('If-Match'))) {
             return $next($request);
         }
 
-        // Get action from request
-        $action = $request->route()->action['uses'];
-
-        // Check if action is controller or closure
-        if (is_string($action)) { // Controller
-            $controller = explode('@', $action)[0];
-            $method = 'show';
-            $response = app()->call("$controller@$method", $request->route()->parameters());
-        } else { // Closure
-            $response = app()->call($action);
-        }
-
-        // Check if response is object
-        if (! is_object($response)) {
-            $response = response($response);
-        }
-
-        // Handle JsonResource responses
-        if (is_a($response, JsonResource::class)) {
-            $response = $response->response();
-        }
+        // Create new GET request to same endpoint,
+        // copy headers and add header that allows you to ignore this request in middlewares
+        $getRequest = Request::create($request->getRequestUri(), 'GET');
+        $getRequest->headers = $request->headers;
+        $getRequest->headers->set('X-Skip-Middleware', true);
+        $getResponse = app()->handle($getRequest);
 
         // Get content from response object and get hashes from content and etag
-        $content = $response->getContent();
-        $currentEtag = '"'.md5($content).'"';
+        $getContent = $getResponse->getContent();
+        $getEtag = '"'.md5($getContent).'"';
         $ifMatch = $request->header('If-Match');
 
         // Compare current and request hashes
-        if ($currentEtag !== $ifMatch) {
+        if ($getEtag !== $ifMatch) {
             return response(null, 412);
         }
 

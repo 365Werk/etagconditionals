@@ -1,18 +1,19 @@
 <?php
 
-namespace Tests\Feature;
+namespace Werk365\EtagConditionals\Tests;
 
-use Tests\TestCase;
+use Orchestra\Testbench\TestCase;
+use Werk365\EtagConditionals\Middleware\SetEtag;
 
 class SetEtagTest extends TestCase
 {
     private string $response = 'OK';
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
-        \Route::middleware('setEtag')->any('/_test/set-etag', function () {
+        \Route::middleware(SetEtag::class)->any('/_test/set-etag', function () {
             return $this->response;
         });
     }
