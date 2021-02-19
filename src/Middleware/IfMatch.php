@@ -4,9 +4,7 @@ namespace Werk365\EtagConditionals\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Route;
 
 class IfMatch extends Middleware
 {
