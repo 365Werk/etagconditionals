@@ -6,6 +6,9 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
 [![StyleCI][ico-styleci]][link-styleci]
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/365Werk/etagconditionals/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/365Werk/etagconditionals/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/365Werk/etagconditionals/badges/build.png?b=master)](https://scrutinizer-ci.com/g/365Werk/etagconditionals/build-status/master)
+
 
   
 
@@ -56,7 +59,7 @@ This middleware will create a new request to the `GET` equivalent of the endpoin
 
 > __Important__ Since the internal `GET` request created will also pass through enabled middleware, you might run in to some cases where this is causing issues. For example: if you have a middleware that changes the response body that was not applied to the response that the `If-Match` etag belongs to, this will result in non-matching hashes. 
 >
->For this scenario, this middleware sets a `X-Skip-MIddleware: true` header which you can use in other middleware to filter these requests. Please note that since this header could also be set by a client, it should never be used to skip anything important like auth middleware.
+>For this scenario, this middleware sets a `X-From-Middleware: IfMatch` header which you can use in other middleware to filter these requests. Please note that since this header could also be set by a client, it should never be used to skip anything important like auth middleware.
 
 ### ifNoneMatch 
 `Method: GET|HEAD`

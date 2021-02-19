@@ -30,7 +30,7 @@ class IfMatch extends Middleware
         // copy headers and add header that allows you to ignore this request in middlewares
         $getRequest = Request::create($request->getRequestUri(), 'GET');
         $getRequest->headers = $request->headers;
-        $getRequest->headers->set('X-Skip-Middleware', true);
+        $getRequest->headers->set('X-From-Middleware', 'IfMatch');
         $getResponse = app()->handle($getRequest);
 
         // Get content from response object and get hashes from content and etag
