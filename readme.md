@@ -66,6 +66,22 @@ This middleware will create a new request to the `GET` equivalent of the endpoin
 
 This middleware will simply compare the submitted `If-None-Match` header to a newly created etag of the response. If there is no match, `200` is returned, with the new response in the case of a `GET` request. If the hashes are matching, `304` is returned with no content, allowing the browser to used cached content instead.
 
+### Comparison algorithms
+By default, a weak comparison algorithm will be used for both the `IfMatch` and `IfNoneMatch` ETags. In practise this means that we simply strip any `W/` tags from the ETag, so they can be compared to normal tags created in the middleware. This is to support cases where certain configurations automatically add the `W/` tag to our supplied ETag.
+
+This behaviour can be changed by either publishing the config file: 
+```bash
+$ php artisan vendor:publish --provider="Werk365\EtagConditionals\EtagConditionalsServiceProvider"
+```
+And then changing the following values:
+```php
+return [
+    'if_match_weak' => env('IF_MATCH_WEAK', true),
+    'if_none_match_weak' => env('IF_NONE_MATCH_WEAK', true),
+];
+```
+Or by setting the ENV values above.
+
 ## Change log
 
   

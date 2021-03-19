@@ -36,6 +36,11 @@ class IfMatch extends Middleware
         $getEtag = '"'.md5($getContent).'"';
         $ifMatch = $request->header('If-Match');
 
+        // Strip W/ if weak comparison algorithm can be used
+        if (config('etagconditionals.if_match_weak')) {
+            $ifMatch = str_replace('W/', '', $ifMatch);
+        }
+
         // Compare current and request hashes
         if ($getEtag !== $ifMatch) {
             return response(null, 412);
