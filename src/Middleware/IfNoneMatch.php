@@ -33,8 +33,8 @@ class IfNoneMatch extends Middleware
         $noneMatch = $request->getETags();
 
         // Strip W/ if weak comparison algorithm can be used
-        if(config('etagconditionals.if_none_match_weak')){
-            $noneMatch = array_map([$this, "stripWeakTags"], $noneMatch);
+        if (config('etagconditionals.if_none_match_weak')) {
+            $noneMatch = array_map([$this, 'stripWeakTags'], $noneMatch);
         }
 
         if (in_array($etag, $noneMatch)) {
@@ -46,7 +46,8 @@ class IfNoneMatch extends Middleware
         return $response;
     }
 
-    private function stripWeakTags($etag){
+    private function stripWeakTags($etag)
+    {
         return str_replace('W/', '', $etag);
     }
 }
