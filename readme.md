@@ -76,8 +76,8 @@ $ php artisan vendor:publish --provider="Werk365\EtagConditionals\EtagConditiona
 And then changing the following values:
 ```php
 return [
-    "if_match_weak" => env('IF_MATCH_WEAK', true),
-    "if_none_match_weak" => env('IF_NONE_MATCH_WEAK', true),
+    'if_match_weak' => env('IF_MATCH_WEAK', true),
+    'if_none_match_weak' => env('IF_NONE_MATCH_WEAK', true),
 ];
 ```
 Or by setting the ENV values above.
