@@ -37,7 +37,7 @@ class IfMatch extends Middleware
         $ifMatch = $request->header('If-Match');
 
         // Strip W/ if weak comparison algorithm can be used
-        if(config('etagconditionals.if_match_weak')){
+        if (config('etagconditionals.if_match_weak')) {
             $ifMatch = str_replace('W/', '', $ifMatch);
         }
 
