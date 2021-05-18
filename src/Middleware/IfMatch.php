@@ -5,6 +5,7 @@ namespace Werk365\EtagConditionals\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Werk365\EtagConditionals\EtagConditionals;
 
 class IfMatch extends Middleware
 {
@@ -32,8 +33,7 @@ class IfMatch extends Middleware
         $getResponse = app()->handle($getRequest);
 
         // Get content from response object and get hashes from content and etag
-        $getContent = $getResponse->getContent();
-        $getEtag = '"'.md5($getContent).'"';
+        $getEtag = EtagConditionals::getEtag($request, $getResponse);
         $ifMatch = $request->header('If-Match');
 
         // Strip W/ if weak comparison algorithm can be used

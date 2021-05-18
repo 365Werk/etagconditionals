@@ -4,6 +4,7 @@ namespace Werk365\EtagConditionals\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Werk365\EtagConditionals\EtagConditionals;
 
 class SetEtag extends Middleware
 {
@@ -26,11 +27,11 @@ class SetEtag extends Middleware
             $request->setMethod('GET');
         }
 
-        //Handle response
+        // Handle response
         $response = $next($request);
 
         // Setting etag
-        $etag = md5($response->getContent());
+        $etag = EtagConditionals::getEtag($request, $response);
         $response->setEtag($etag);
 
         $request->setMethod($method);

@@ -4,6 +4,7 @@ namespace Werk365\EtagConditionals\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Werk365\EtagConditionals\EtagConditionals;
 
 class IfNoneMatch extends Middleware
 {
@@ -29,7 +30,7 @@ class IfNoneMatch extends Middleware
         //Handle response
         $response = $next($request);
 
-        $etag = '"'.md5($response->getContent()).'"';
+        $etag = EtagConditionals::getEtag($request, $response);
         $noneMatch = $request->getETags();
 
         // Strip W/ if weak comparison algorithm can be used
