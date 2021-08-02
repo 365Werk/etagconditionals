@@ -43,13 +43,13 @@ class IfMatch extends Middleware
 
         $ifMatchArray = explode(',', $ifMatch);
 
-        foreach($ifMatchArray as &$match){
+        foreach ($ifMatchArray as &$match) {
             $match = trim($match);
         }
 
         // Compare current and request hashes
         // Also allow wildcard (*) values
-        if (!(in_array($getEtag, $ifMatchArray) || in_array('"*"', $ifMatchArray))) {
+        if (! (in_array($getEtag, $ifMatchArray) || in_array('"*"', $ifMatchArray))) {
             return response(null, 412);
         }
 
