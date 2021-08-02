@@ -41,8 +41,15 @@ class IfMatch extends Middleware
             $ifMatch = str_replace('W/', '', $ifMatch);
         }
 
+        $ifMatchArray = explode(',', $ifMatch);
+
+        foreach($ifMatchArray as &$match){
+            $match = trim($match);
+        }
+
         // Compare current and request hashes
-        if ($getEtag !== $ifMatch) {
+        // Also allow wildcard (*) values
+        if (!(in_array($getEtag, $ifMatchArray) || in_array('"*"', $ifMatchArray))) {
             return response(null, 412);
         }
 

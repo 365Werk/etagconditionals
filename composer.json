@@ -1,7 +1,7 @@
 {
     "name": "werk365/etagconditionals",
     "description": "Laravel package to enable support for ETags and handling If-Match and If-None-Match conditional requests",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "license": "MIT",
     "authors": [
         {
