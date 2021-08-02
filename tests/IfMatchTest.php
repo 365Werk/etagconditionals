@@ -34,7 +34,7 @@ class IfMatchTest extends TestCase
     /** @test */
     public function patch_request_returns_200_if_matching_IfMatch_in_list_of_etags()
     {
-        $ifMatch = '"'.md5("first").'", "'.md5($this->response).'","'.md5("last").'"';
+        $ifMatch = '"'.md5('first').'", "'.md5($this->response).'","'.md5('last').'"';
         $response = $this->withHeaders([
             'If-Match' => $ifMatch,
         ])
@@ -46,7 +46,7 @@ class IfMatchTest extends TestCase
     /** @test */
     public function patch_request_returns_200_if_wildcard_is_used()
     {
-        $ifMatch = '"'.md5("first").'", "*","'.md5("last").'"';
+        $ifMatch = '"'.md5('first').'", "*","'.md5('last').'"';
         $response = $this->withHeaders([
             'If-Match' => $ifMatch,
         ])
@@ -70,7 +70,7 @@ class IfMatchTest extends TestCase
     /** @test */
     public function patch_request_returns_412_if_none_matching_IfMatch_in_list_of_etags()
     {
-        $ifMatch = '"'.md5("first").'", "'.md5($this->response.'ifMatch').'","'.md5("last").'"';
+        $ifMatch = '"'.md5('first').'", "'.md5($this->response.'ifMatch').'","'.md5('last').'"';
         $response = $this->withHeaders([
             'If-Match' => $ifMatch,
         ])
