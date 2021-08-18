@@ -36,17 +36,17 @@ class IfMatch extends Middleware
         $getEtag = EtagConditionals::getEtag($request, $getResponse);
         $ifMatch = $request->header('If-Match');
 
-        if($ifMatch === null){
+        if ($ifMatch === null) {
             return response(null, 412);
         }
 
-        $ifMatchArray = (is_string($ifMatch))?
-            explode(',', $ifMatch):
+        $ifMatchArray = (is_string($ifMatch)) ?
+            explode(',', $ifMatch) :
             $ifMatch;
 
         // Strip W/ if weak comparison algorithm can be used
         if (config('etagconditionals.if_match_weak')) {
-            foreach($ifMatchArray as &$match){
+            foreach ($ifMatchArray as &$match) {
                 $match = str_replace('W/', '', $match);
             }
             unset($match);
