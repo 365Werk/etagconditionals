@@ -64,7 +64,8 @@ class IfMatch extends Middleware
             return response(null, 412);
         }
 
-        $request->headers->set('X-From-Middleware','If-Match');
+        $request->headers->set('X-From-Middleware', 'If-Match');
+
         return app()->handle($request);
     }
 }
