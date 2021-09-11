@@ -21,7 +21,8 @@ class IfMatch extends Middleware
     public function handle(Request $request, Closure $next)
     {
         // Next unless method is PATCH and If-Match header is set
-        if (! ($request->isMethod('PATCH') && $request->hasHeader('If-Match'))) {
+        if ((! ($request->isMethod('PATCH') && $request->hasHeader('If-Match')))
+            || $request->hasHeader('X-From-Middleware')) {
             return $next($request);
         }
 
@@ -63,6 +64,7 @@ class IfMatch extends Middleware
             return response(null, 412);
         }
 
-        return $next($request);
+        $request->headers->set('X-From-Middleware','If-Match');
+        return app()->handle($request);
     }
 }
