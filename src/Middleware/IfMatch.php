@@ -21,8 +21,7 @@ class IfMatch extends Middleware
     public function handle(Request $request, Closure $next)
     {
         // Next unless method is PATCH and If-Match header is set
-        if ((! ($request->isMethod('PATCH') && $request->hasHeader('If-Match')))
-            || $request->hasHeader('X-From-Middleware')) {
+        if (! ($request->isMethod('PATCH') && $request->hasHeader('If-Match'))) {
             return $next($request);
         }
 
@@ -64,7 +63,10 @@ class IfMatch extends Middleware
             return response(null, 412);
         }
 
-        $request->headers->set('X-From-Middleware','If-Match');
-        return app()->handle($request);
+        // Before continuing, prepare the application to receive our request
+        // This is for Laravel Octane support
+        app()->instance('request', $request);
+
+        return $next($request);
     }
 }
