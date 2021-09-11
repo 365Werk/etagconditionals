@@ -63,6 +63,10 @@ class IfMatch extends Middleware
             return response(null, 412);
         }
 
+        // Before continuing, prepare the application to receive our request
+        // This is for Laravel Octane support
+        app()->instance('request', $request);
+
         return $next($request);
     }
 }
