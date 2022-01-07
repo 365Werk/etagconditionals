@@ -42,7 +42,11 @@ class EtagConditionals
             $etag = static::defaultGetEtag($response);
         }
 
-        return (string) Str::of($etag)->start('"')->finish('"');
+        if (method_exists(Str::class, 'of')) {
+            return (string) Str::of($etag)->start('"')->finish('"');
+        }
+        $etag = Str::start($etag, '"');
+        return Str::finish($etag, '"');
     }
 
     /**
