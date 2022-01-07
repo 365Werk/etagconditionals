@@ -45,7 +45,9 @@ class EtagConditionals
         if (method_exists(Str::class, 'of')) {
             return (string) Str::of($etag)->start('"')->finish('"');
         }
+
         $etag = Str::start($etag, '"');
+
         return Str::finish($etag, '"');
     }
 
