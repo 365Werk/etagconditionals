@@ -10,13 +10,16 @@
         }
     ],
     "homepage": "https://github.com/werk365/etagconditionals",
-    "keywords": ["Laravel", "EtagConditionals"],
+    "keywords": [
+        "Laravel",
+        "EtagConditionals"
+    ],
     "require": {
-        "illuminate/support": "~7|~8|~9|~10"
+        "illuminate/support": "~7|~8|~9|~10|^11.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~8.0|~9.0",
-        "orchestra/testbench": "~5|~6|~7|~8"
+        "phpunit/phpunit": "~8.0|~9.0|^10.5",
+        "orchestra/testbench": "~5|~6|~7|~8|^9.0"
     },
     "autoload": {
         "psr-4": {
