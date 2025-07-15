@@ -4,6 +4,7 @@ namespace Werk365\EtagConditionals\Tests;
 
 use Illuminate\Http\Request;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\Response;
 use Werk365\EtagConditionals\EtagConditionals;
 
@@ -14,9 +15,10 @@ class EtagConditionalsTest extends TestCase
     public function tearDown(): void
     {
         EtagConditionals::etagGenerateUsing(null);
+        parent::tearDown();
     }
 
-    /** @test */
+    #[Test]
     public function get_default_etag()
     {
         $request = Request::create('/', 'GET');
@@ -25,7 +27,7 @@ class EtagConditionalsTest extends TestCase
         $this->assertEquals('"e0aa021e21dddbd6d8cecec71e9cf564"', EtagConditionals::getEtag($request, $response));
     }
 
-    /** @test */
+    #[Test]
     public function get_etag_with_callback_md5()
     {
         $request = Request::create('/', 'GET');
@@ -38,7 +40,7 @@ class EtagConditionalsTest extends TestCase
         $this->assertEquals('"e0aa021e21dddbd6d8cecec71e9cf564"', EtagConditionals::getEtag($request, $response));
     }
 
-    /** @test */
+    #[Test]
     public function get_etag_with_callback_sophisticated()
     {
         $request = Request::create('/', 'GET');
@@ -51,7 +53,7 @@ class EtagConditionalsTest extends TestCase
         $this->assertEquals('"sophisticated"', EtagConditionals::getEtag($request, $response));
     }
 
-    /** @test */
+    #[Test]
     public function get_etag_with_callback_with_quotes()
     {
         $request = Request::create('/', 'GET');
