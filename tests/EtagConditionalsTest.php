@@ -4,20 +4,21 @@ namespace Werk365\EtagConditionals\Tests;
 
 use Illuminate\Http\Request;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\Response;
 use Werk365\EtagConditionals\EtagConditionals;
 
-class EtagConditionalsTest extends TestCase
+final class EtagConditionalsTest extends TestCase
 {
     private string $response = 'OK';
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         EtagConditionals::etagGenerateUsing(null);
     }
 
-    /** @test */
-    public function get_default_etag()
+    #[Test]
+    public function get_default_etag(): void
     {
         $request = Request::create('/', 'GET');
         $response = response($this->response, 200);
@@ -25,8 +26,8 @@ class EtagConditionalsTest extends TestCase
         $this->assertEquals('"e0aa021e21dddbd6d8cecec71e9cf564"', EtagConditionals::getEtag($request, $response));
     }
 
-    /** @test */
-    public function get_etag_with_callback_md5()
+    #[Test]
+    public function get_etag_with_callback_md5(): void
     {
         $request = Request::create('/', 'GET');
         $response = response($this->response, 200);
@@ -38,8 +39,8 @@ class EtagConditionalsTest extends TestCase
         $this->assertEquals('"e0aa021e21dddbd6d8cecec71e9cf564"', EtagConditionals::getEtag($request, $response));
     }
 
-    /** @test */
-    public function get_etag_with_callback_sophisticated()
+    #[Test]
+    public function get_etag_with_callback_sophisticated(): void
     {
         $request = Request::create('/', 'GET');
         $response = response($this->response, 200);
@@ -51,8 +52,8 @@ class EtagConditionalsTest extends TestCase
         $this->assertEquals('"sophisticated"', EtagConditionals::getEtag($request, $response));
     }
 
-    /** @test */
-    public function get_etag_with_callback_with_quotes()
+    #[Test]
+    public function get_etag_with_callback_with_quotes(): void
     {
         $request = Request::create('/', 'GET');
         $response = response($this->response, 200);

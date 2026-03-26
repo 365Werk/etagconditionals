@@ -3,13 +3,14 @@
 namespace Werk365\EtagConditionals\Tests;
 
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Werk365\EtagConditionals\Middleware\SetEtag;
 
-class SetEtagTest extends TestCase
+final class SetEtagTest extends TestCase
 {
     private string $response = 'OK';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -18,15 +19,15 @@ class SetEtagTest extends TestCase
         });
     }
 
-    /** @test */
-    public function middleware_sets_etag_header()
+    #[Test]
+    public function middleware_sets_etag_header(): void
     {
         $response = $this->get('/_test/set-etag');
         $response->assertHeader('ETag', $value = null);
     }
 
-    /** @test */
-    public function etag_header_has_correct_value()
+    #[Test]
+    public function etag_header_has_correct_value(): void
     {
         $value = '"'.md5($this->response).'"';
         $response = $this->get('/_test/set-etag');

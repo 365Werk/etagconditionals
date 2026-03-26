@@ -4,13 +4,14 @@ namespace Werk365\EtagConditionals\Tests;
 
 use Illuminate\Support\Facades\Config;
 use Orchestra\Testbench\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Werk365\EtagConditionals\Middleware\IfMatch;
 
-class IfMatchTest extends TestCase
+final class IfMatchTest extends TestCase
 {
     private string $response = 'OK';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -19,8 +20,8 @@ class IfMatchTest extends TestCase
         });
     }
 
-    /** @test */
-    public function patch_request_returns_200_if_matching_IfMatch()
+    #[Test]
+    public function patch_request_returns_200_if_matching_IfMatch(): void
     {
         $ifMatch = '"'.md5($this->response).'"';
         $response = $this->withHeaders([
@@ -31,8 +32,8 @@ class IfMatchTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
-    public function patch_request_returns_200_if_matching_IfMatch_in_list_of_etags()
+    #[Test]
+    public function patch_request_returns_200_if_matching_IfMatch_in_list_of_etags(): void
     {
         $ifMatch = '"'.md5('first').'", "'.md5($this->response).'","'.md5('last').'"';
         $response = $this->withHeaders([
@@ -43,8 +44,8 @@ class IfMatchTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
-    public function patch_request_returns_200_if_wildcard_is_used()
+    #[Test]
+    public function patch_request_returns_200_if_wildcard_is_used(): void
     {
         $ifMatch = '"'.md5('first').'", "*","'.md5('last').'"';
         $response = $this->withHeaders([
@@ -55,8 +56,8 @@ class IfMatchTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
-    public function patch_request_returns_412_if_none_matching_IfMatch()
+    #[Test]
+    public function patch_request_returns_412_if_none_matching_IfMatch(): void
     {
         $ifMatch = '"'.md5($this->response.'ifMatch').'"';
         $response = $this->withHeaders([
@@ -67,8 +68,8 @@ class IfMatchTest extends TestCase
         $response->assertStatus(412);
     }
 
-    /** @test */
-    public function patch_request_returns_412_if_none_matching_IfMatch_in_list_of_etags()
+    #[Test]
+    public function patch_request_returns_412_if_none_matching_IfMatch_in_list_of_etags(): void
     {
         $ifMatch = '"'.md5('first').'", "'.md5($this->response.'ifMatch').'","'.md5('last').'"';
         $response = $this->withHeaders([
@@ -79,8 +80,8 @@ class IfMatchTest extends TestCase
         $response->assertStatus(412);
     }
 
-    /** @test */
-    public function patch_request_returns_200_if_matching_weaktag_when_weak_is_enabled_in_config()
+    #[Test]
+    public function patch_request_returns_200_if_matching_weaktag_when_weak_is_enabled_in_config(): void
     {
         Config::set('etagconditionals.if_match_weak', true);
         $ifMatch = 'W/"'.md5($this->response).'"';
@@ -92,8 +93,8 @@ class IfMatchTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
-    public function patch_request_returns_412_if_matching_weaktag_when_weak_is_disabled_in_config()
+    #[Test]
+    public function patch_request_returns_412_if_matching_weaktag_when_weak_is_disabled_in_config(): void
     {
         Config::set('etagconditionals.if_match_weak', false);
         $ifMatch = 'W/"'.md5($this->response).'"';
